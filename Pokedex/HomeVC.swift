@@ -13,6 +13,7 @@ class HomeVC: UIViewController {
   
   // MARK: - Outlets
   @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet weak var searchBar: UISearchBar!
   
   
   
@@ -21,6 +22,8 @@ class HomeVC: UIViewController {
   // MARK: - Variables
   var pokemons = [Pokemon]()
   var musicPlayer: AVAudioPlayer!
+  var filteredPokemons = [Pokemon]()
+  var isInFilterMode = false
   
   
   
@@ -84,6 +87,7 @@ class HomeVC: UIViewController {
     
     collectionView.delegate = self
     collectionView.dataSource = self
+    searchBar.delegate = self
     
     parsePokemonCSV()
     initAudio()
@@ -99,7 +103,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCell", for: indexPath) as? PokemonCell {
-      let pokemon = pokemons[indexPath.row]
+      let pokemon = getPokemonSourceArray()[indexPath.row]
       
       cell.configureCell(pokemon: pokemon)
       
@@ -114,7 +118,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return pokemons.count
+    return getPokemonSourceArray().count
   }
   
   func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -123,5 +127,34 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 105, height: 105)
+  }
+}
+
+
+
+
+
+// MARK: - UISearchBar
+extension HomeVC: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    if searchBar.text == nil || searchBar.text == "" {
+      isInFilterMode = false
+      collectionView.reloadData()
+    } else {
+      isInFilterMode = true
+      
+      if let lower = searchBar.text?.lowercased() {
+        filteredPokemons = pokemons.filter({$0.name.range(of: lower) != nil})
+        collectionView.reloadData()
+      }
+    }
+  }
+  
+  func getPokemonSourceArray() -> [Pokemon] {
+    if isInFilterMode == true {
+      return self.filteredPokemons
+    } else {
+      return self.pokemons
+    }
   }
 }
