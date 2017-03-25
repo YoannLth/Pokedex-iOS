@@ -9,7 +9,7 @@
 import Foundation
 
 class Pokemon {
-  //MARK: - Variables
+  // MARK: - Variables
   // Privates
   private var _name: String!
   private var _pokedexID: Int!
@@ -22,7 +22,7 @@ class Pokemon {
   
   
   
-  //MARK: - Initializer 
+  // MARK: - Initializer 
   init(name: String, pokedexID: Int) {
     self._name = name
     self._pokedexID = pokedexID

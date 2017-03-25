@@ -19,3 +19,4 @@ disabled_rules: # some rules are only opt-in
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
 - Pods
+- Pokedex/csv.swift
