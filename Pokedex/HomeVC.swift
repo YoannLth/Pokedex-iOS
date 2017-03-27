@@ -20,9 +20,9 @@ class HomeVC: UIViewController {
   
   
   // MARK: - Variables
-  var pokemons = [Pokemon]()
+  var pokemonArray = [Pokemon]()
   var musicPlayer: AVAudioPlayer!
-  var filteredPokemons = [Pokemon]()
+  var filteredPokemonArray = [Pokemon]()
   var isInFilterMode = false
   
   
@@ -39,7 +39,7 @@ class HomeVC: UIViewController {
         for row in rows {
           if let pokeIDString = row["id"], let pokeID = Int(pokeIDString), let name = row["identifier"] {
             let pokemon = Pokemon(name: name, pokedexID: pokeID)
-            pokemons.append(pokemon)
+            pokemonArray.append(pokemon)
           }
         }
       }
@@ -103,7 +103,13 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCell", for: indexPath) as? PokemonCell {
-      let pokemon = getPokemonSourceArray()[indexPath.row]
+      var pokemon: Pokemon
+        
+      if isInFilterMode {
+        pokemon = filteredPokemonArray[indexPath.row]
+      } else {
+        pokemon = pokemonArray[indexPath.row]
+      }
       
       cell.configureCell(pokemon: pokemon)
       
@@ -114,11 +120,23 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //
+    var pokemon: Pokemon
+    
+    if isInFilterMode {
+      pokemon = filteredPokemonArray[indexPath.row]
+    } else {
+      pokemon = pokemonArray[indexPath.row]
+    }
+    
+    performSegue(withIdentifier: "PokemonDetailsVC", sender: pokemon)
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return getPokemonSourceArray().count
+    if isInFilterMode {
+      return filteredPokemonArray.count
+    } else {
+      return pokemonArray.count
+    }
   }
   
   func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -140,21 +158,36 @@ extension HomeVC: UISearchBarDelegate {
     if searchBar.text == nil || searchBar.text == "" {
       isInFilterMode = false
       collectionView.reloadData()
+      view.endEditing(true)
     } else {
       isInFilterMode = true
       
       if let lower = searchBar.text?.lowercased() {
-        filteredPokemons = pokemons.filter({$0.name.range(of: lower) != nil})
+        filteredPokemonArray = pokemonArray.filter({$0.name.range(of: lower) != nil})
         collectionView.reloadData()
       }
     }
   }
   
-  func getPokemonSourceArray() -> [Pokemon] {
-    if isInFilterMode == true {
-      return self.filteredPokemons
-    } else {
-      return self.pokemons
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    view.endEditing(true)
+  }
+}
+
+
+
+
+
+// MARK: - Segue
+extension HomeVC {
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "PokemonDetailVC" {
+      if let detailsVC = segue.destination as? PokemonDetailsVC {
+        if let pokemon = sender as? Pokemon {
+          detailsVC.pokemon = pokemon
+        }
+      }
     }
   }
 }
