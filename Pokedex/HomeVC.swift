@@ -90,7 +90,7 @@ class HomeVC: UIViewController {
     searchBar.delegate = self
     
     parsePokemonCSV()
-    initAudio()
+    //initAudio()
   }
 }
 
@@ -182,7 +182,7 @@ extension HomeVC: UISearchBarDelegate {
 extension HomeVC {
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "PokemonDetailVC" {
+    if segue.identifier == "PokemonDetailsVC" {
       if let detailsVC = segue.destination as? PokemonDetailsVC {
         if let pokemon = sender as? Pokemon {
           detailsVC.pokemon = pokemon

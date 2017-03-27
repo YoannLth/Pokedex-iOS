@@ -179,6 +179,7 @@
                                         </constraints>
                                         <state key="normal" image="back"/>
                                         <connections>
+                                            <action selector="backButtonPressed:" destination="EPT-mQ-8Ge" eventType="touchUpInside" id="wPL-gE-YIZ"/>
                                             <action selector="playButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U3y-mF-oNR"/>
                                         </connections>
                                     </button>
@@ -219,13 +220,17 @@
                                                             <constraint firstAttribute="width" constant="120" id="QML-B7-BIY"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon description" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="StB-ni-98y">
-                                                        <rect key="frame" x="120" y="50" width="168" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pokemon description" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="StB-ni-98y">
+                                                        <rect key="frame" x="120" y="0.0" width="168" height="120"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="StB-ni-98y" firstAttribute="top" secondItem="a25-L4-Bpi" secondAttribute="top" id="Gb9-Fm-hCK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="StB-ni-98y" secondAttribute="bottom" id="v8J-gb-8ez"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -402,13 +407,13 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="GyF-2A-BWG">
-                                <rect key="frame" x="22.5" y="438" width="275" height="120"/>
+                                <rect key="frame" x="16" y="438" width="288" height="120"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xLf-Tz-54a">
                                         <rect key="frame" x="0.0" y="0.0" width="129" height="120"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K3T-N9-VyM">
-                                        <rect key="frame" x="159" y="0.0" width="116" height="120"/>
+                                        <rect key="frame" x="159" y="0.0" width="129" height="120"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -432,6 +437,19 @@
                             <constraint firstAttribute="trailing" secondItem="khb-Mt-Xsi" secondAttribute="trailing" id="tOy-cg-VaK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="baseAttackLabel" destination="fQ9-G2-vLu" id="fly-10-OPG"/>
+                        <outlet property="defenseLabel" destination="pQg-lA-Kdo" id="Bxw-3H-2RO"/>
+                        <outlet property="descriptionLabel" destination="StB-ni-98y" id="1P8-Mv-tKV"/>
+                        <outlet property="evolutionLabel" destination="awR-d8-3mF" id="mob-o3-8ac"/>
+                        <outlet property="heightLabel" destination="eeU-Jd-Uei" id="NTX-DE-9TS"/>
+                        <outlet property="mainImage" destination="NsQ-R1-0bq" id="rNR-WI-6l7"/>
+                        <outlet property="nextEvolutionImage" destination="xLf-Tz-54a" id="HVZ-2h-KIA"/>
+                        <outlet property="pokedexIDLabel" destination="klu-zc-H7x" id="5O5-zD-JsR"/>
+                        <outlet property="pokemonNameLabel" destination="9Ab-ip-eYi" id="awP-mA-mhh"/>
+                        <outlet property="typeLabel" destination="5PA-FM-xeG" id="8rI-5e-TQm"/>
+                        <outlet property="weightLabel" destination="Yg3-wU-u2Q" id="aKQ-et-MKl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQU-Bt-jH2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
